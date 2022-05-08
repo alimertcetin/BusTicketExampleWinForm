@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BusTicketExample
 {
-    public partial class Form1 : Form
+    public partial class MainParent : Form
     {
-        public Form1()
+        public MainParent()
         {
             InitializeComponent();
         }
