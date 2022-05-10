@@ -28,7 +28,7 @@ namespace XIV.Utils
             {
                 object item = list[i];
                 var control = (ButtonBase)Activator.CreateInstance(typeof(TButtonBase));
-                control.Name = $"{item}";
+                control.Name = item.ToString();
                 control.Text = item.ToString();
                 panel.Controls.Add(control);
             }
@@ -49,7 +49,20 @@ namespace XIV.Utils
             foreach (TEnum item in list)
             {
                 var control = (ButtonBase)Activator.CreateInstance(typeof(TButtonBase));
-                control.Name = $"{item}";
+                control.Name = item.ToString();
+                control.Text = item.ToString();
+                panel.Controls.Add(control);
+            }
+        }
+
+        public static void FillWithObject<TButtonBase, T>(FlowLayoutPanel panel, IList<T> list)
+            where TButtonBase : ButtonBase
+        {
+            panel.Controls.Clear();
+            foreach (T item in list)
+            {
+                var control = (ButtonBase)Activator.CreateInstance(typeof(TButtonBase));
+                control.Name = item.ToString();
                 control.Text = item.ToString();
                 panel.Controls.Add(control);
             }

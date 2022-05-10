@@ -1,7 +1,7 @@
 ﻿
-namespace BusTicketExample
+namespace BusTicketExample.Forms
 {
-    partial class MainParent
+    partial class frm_MainParent
     {
         /// <summary>
         ///  Required designer variable.

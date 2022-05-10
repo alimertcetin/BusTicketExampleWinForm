@@ -155,6 +155,13 @@ namespace XIV.Utils
             }
         }
 
+        public static T CreateDraggableControl<T>() where T : Control
+        {
+            Control control = Activator.CreateInstance<T>();
+            control.AllowDrop = true;
+            return (T)control;
+        }
+
     }
 
 }

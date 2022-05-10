@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BusTicketExample.Forms;
 
 namespace BusTicketExample
 {
@@ -17,7 +18,7 @@ namespace BusTicketExample
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainParent());
+            Application.Run(new frm_MainParent());
         }
     }
 }
