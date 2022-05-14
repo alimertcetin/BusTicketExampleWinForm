@@ -1,6 +1,3 @@
-[submodule "XIV-WinFormUtils"]
-	path = XIV-WinFormUtils
-	url = https://github.com/alimertcetin/XIV-WinFormUtils.git
 [submodule "BusTicketExample/XIV-WinFormUtils"]
 	path = BusTicketExample/XIV-WinFormUtils
 	url = https://github.com/alimertcetin/XIV-WinFormUtils.git
