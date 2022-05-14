@@ -29,7 +29,7 @@ namespace BusTicketExample.Forms
                     MessageBox.Show("Apply a legit size");
                     return;
                 }
-                Button button = FormUtils.CreateDraggableControl<Button>();
+                Button button = FormUtils.CreateDraggableControl<Button>(this);
                 button.Size = new Size(controlSize);
                 this.dragHelper.Add(button);
                 this.Controls.Add(button);
