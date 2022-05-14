@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="XIV-WinFormUtils\FormUtils\Program.cs" />
+    <Compile Remove="XIV-WinFormUtils\XIV-WinformUtils\Program.cs" />
   </ItemGroup>
 
 </Project>
