@@ -4,11 +4,10 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using XIV.Utils;
 
 namespace BusTicketExample.Forms
 {
-    using XIV.Utils;
-
     public partial class frm_CreateBusLayout : Form
     {
         private DragHelper dragHelper;
@@ -30,7 +29,7 @@ namespace BusTicketExample.Forms
                     MessageBox.Show("Apply a legit size");
                     return;
                 }
-                Button button = FormUtils.CreateDraggableControl<Button>(this);
+                Button button = FormUtils.CreateDraggableControl<Button>();
                 button.Size = new Size(controlSize);
                 this.dragHelper.Add(button);
                 this.Controls.Add(button);
