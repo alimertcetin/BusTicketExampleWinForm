@@ -21,7 +21,7 @@ namespace BusTicketExample.Forms
 
         public void Initialize(List<string> seats)
         {
-            FlpUtils.FillWithObject<Button, string>(flp_seats, seats);
+            FlpUtils.FillWithAnyList<string, Button>(flp_seats, seats);
             foreach (Button item in flp_seats.Controls)
             {
                 item.Size = new Size(buttonWidth, buttonHeight);
