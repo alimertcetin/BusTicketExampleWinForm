@@ -10,44 +10,110 @@ namespace BusTicketExample.Forms
 {
     public partial class frm_CreateBusLayout : Form
     {
-        private DragHelper dragHelper;
-        private Point controlSize;
+        private ControlDragger controlDragger;
+        private ControlSelector controlSelector;
+        private ControlResizer controlResizer;
+        private Size controlSize;
+        private enum Mode
+        {
+            None = 0,
+            Drag = 1,
+            Size = 2,
+            LenghtOfMode
+        }
+        private int currentMode;
 
         public frm_CreateBusLayout()
         {
             InitializeComponent();
             this.Select();
-            dragHelper = new DragHelper(txt_Log);
+            controlSelector = new ControlSelector(this);
+            controlDragger = new ControlDragger(this);
+            controlResizer = new ControlResizer();
+            controlSelector.SelectionChanged += HandleSelection;
         }
 
         private void frm_CreateBusLayout_KeyUp(object sender, KeyEventArgs e)
         {
+            if (!this.CanFocus) return;
+
             if(e.KeyCode == Keys.A)
             {
-                if (controlSize.X == 0 || controlSize.Y == 0)
+                if (controlSize.Width == 0 || controlSize.Height == 0)
                 {
                     MessageBox.Show("Apply a legit size");
                     return;
                 }
-                Button button = FormUtils.CreateDraggableControl<Button>(this);
-                button.Size = new Size(controlSize);
-                this.dragHelper.Add(button);
-                this.Controls.Add(button);
+                Button button = new Button();
+                Controls.Add(button);
+                button.Size = controlSize;
             }
-            if (e.KeyCode == Keys.F) txt_Log.Clear();
+            else if (e.KeyCode == Keys.F)
+            {
+                txt_Log.Clear();
+            }
+            else if (e.KeyCode == Keys.R)
+            {
+                // Go to next mode
+                currentMode++;
+                if(currentMode == (int)Mode.LenghtOfMode)
+                {
+                    currentMode = 0;
+                }
+                txt_Log.Text = EnumUtils.GetNameByIndex<Mode>(currentMode);
+                OnModeChanged(EnumUtils.GetValueByName<Mode>(txt_Log.Text));
+            }
         }
 
         private void btn_ApplySize_Click(object sender, EventArgs e)
         {
+            var button = (Button)sender;
+            var buttonSize = button.Size;
             try
             {
                 int x = int.Parse(txt_SizeX.Text);
                 int y = int.Parse(txt_SizeY.Text);
-                controlSize = new Point(x, y);
+                controlSize = new Size(x, y);
+                FormUtils.SetSizeOfType<Button>(controlSize, this);
+                button.Size = buttonSize;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void HandleSelection(bool isSelected, ControlSelector controlSelector)
+        {
+            if (!isSelected)
+            {
+                ClearSelection();
+            }
+            else
+            {
+                OnModeChanged(EnumUtils.GetValueByIndex<Mode>(currentMode));
+            }
+        }
+
+        private void ClearSelection()
+        {
+            controlDragger.Remove(controlSelector.Selection);
+            controlResizer.Remove(controlSelector.Selection);
+        }
+
+        private void OnModeChanged(Mode currentMode)
+        {
+            ClearSelection();
+            switch (currentMode)
+            {
+                case Mode.Drag:
+                    controlDragger.Add(controlSelector.Selection);
+                    break;
+                case Mode.Size:
+                    controlResizer.Add(controlSelector.Selection);
+                    break;
+                default:
+                    break;
             }
         }
     }
