@@ -31,6 +31,7 @@ namespace BusTicketExample.Forms
             controlDragger = new ControlDragger(this);
             controlResizer = new ControlResizer();
             controlSelector.SelectionChanged += HandleSelection;
+            txt_Log.Text = nameof(Mode) + " : " + EnumUtils.GetNameByIndex<Mode>(currentMode);
         }
 
         private void frm_CreateBusLayout_KeyUp(object sender, KeyEventArgs e)
@@ -60,8 +61,8 @@ namespace BusTicketExample.Forms
                 {
                     currentMode = 0;
                 }
-                txt_Log.Text = EnumUtils.GetNameByIndex<Mode>(currentMode);
-                OnModeChanged(EnumUtils.GetValueByName<Mode>(txt_Log.Text));
+                txt_Log.Text = nameof(Mode) + " : " +EnumUtils.GetNameByIndex<Mode>(currentMode);
+                OnModeChanged(EnumUtils.GetValueByIndex<Mode>(currentMode));
             }
         }
 
@@ -85,13 +86,42 @@ namespace BusTicketExample.Forms
 
         private void HandleSelection(bool isSelected, ControlSelector controlSelector)
         {
+            var current = EnumUtils.GetValueByIndex<Mode>(currentMode);
             if (!isSelected)
             {
-                ClearSelection();
+                switch (current)
+                {
+                    case Mode.None:
+                        break;
+                    case Mode.Drag:
+                        controlDragger.Remove(controlSelector.Selection);
+                        break;
+                    case Mode.Size:
+                        controlResizer.Remove(controlSelector.Selection);
+                        break;
+                    case Mode.LenghtOfMode:
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {
-                OnModeChanged(EnumUtils.GetValueByIndex<Mode>(currentMode));
+                switch (current)
+                {
+                    case Mode.None:
+                        break;
+                    case Mode.Drag:
+                        controlDragger.Add(controlSelector.Selection);
+                        break;
+                    case Mode.Size:
+                        controlResizer.Add(controlSelector.Selection);
+                        break;
+                    case Mode.LenghtOfMode:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
